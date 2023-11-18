@@ -9,11 +9,11 @@ import UIKit
 import MapKit
 
 class DetailsVC: UIViewController {
-    @IBOutlet weak var detailsImageView: UIImageView!
-    @IBOutlet weak var placeNameLabel: UILabel!
-    @IBOutlet weak var placeTypeLabel: UILabel!
-    @IBOutlet weak var placeAtmosphereLabel: UILabel!
-    @IBOutlet weak var detailsMapView: MKMapView!
+    @IBOutlet private weak var detailsImageView: UIImageView!
+    @IBOutlet private weak var placeNameLabel: UILabel!
+    @IBOutlet private weak var placeTypeLabel: UILabel!
+    @IBOutlet private weak var placeAtmosphereLabel: UILabel!
+    @IBOutlet private weak var detailsMapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

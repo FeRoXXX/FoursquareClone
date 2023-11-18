@@ -10,10 +10,10 @@ import PhotosUI
 
 class AddPlaceVC: UIViewController {
     
-    @IBOutlet weak var placesNameText: UITextField!
-    @IBOutlet weak var placesTypeText: UITextField!
-    @IBOutlet weak var placesAtmosphereText: UITextField!
-    @IBOutlet weak var loadImage: UIImageView!
+    @IBOutlet private weak var placesNameText: UITextField!
+    @IBOutlet private weak var placesTypeText: UITextField!
+    @IBOutlet private weak var placesAtmosphereText: UITextField!
+    @IBOutlet private weak var loadImage: UIImageView!
     
     
     override func viewDidLoad() {
