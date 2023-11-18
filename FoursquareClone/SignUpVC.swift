@@ -8,7 +8,7 @@
 import UIKit
 import Parse
 
-class ViewController: UIViewController {
+class SignUpVC: UIViewController {
     
     @IBOutlet private weak var userNameText: UITextField!
     @IBOutlet private weak var passwordText: UITextField!
@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         getData()
+        
     }
     
     @IBAction func signInClicked(_ sender: Any) {
@@ -26,7 +27,7 @@ class ViewController: UIViewController {
                 if error != nil{
                     self.makeAlert(title: "Error", message: error?.localizedDescription as? String ?? "Error")
                 } else{
-                    print("Success LogIn")
+                    self.performSegue(withIdentifier: "toPlacesVC", sender: nil)
                 }
             }
         } else{
@@ -44,7 +45,7 @@ class ViewController: UIViewController {
                 if error != nil{
                     self.makeAlert(title: "Error", message: error?.localizedDescription as? String ?? "Error")
                 } else{
-                    print("Success")
+                    self.performSegue(withIdentifier: "toPlacesVC", sender: nil)
                 }
             }
         } else{
@@ -56,7 +57,7 @@ class ViewController: UIViewController {
 }
 
 //MARK: - make Alert function
-private extension ViewController{
+private extension SignUpVC{
 
     func makeAlert(title: String, message: String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.actionSheet)
@@ -67,7 +68,7 @@ private extension ViewController{
 }
 
 //MARK: - Test uploading data
-private extension ViewController{
+private extension SignUpVC{
     
     func uploadData(){
         let parseObject = PFObject(className: "Fruits")
@@ -85,7 +86,7 @@ private extension ViewController{
 
 //MARK: - Test get Data
 
-private extension ViewController{
+private extension SignUpVC{
     
     func getData(){
         let query = PFQuery(className: "Fruits")
