@@ -7,12 +7,11 @@
 
 import UIKit
 import MapKit
+import Parse
 
 class MapVC: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
     private var locationManager = CLLocationManager()
-    private var chosenLatitude = ""
-    private var chosenLongitude = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +60,8 @@ private extension MapVC {
             annotation.subtitle = PlaceModel.sharedInstance.placeType
             self.mapView.addAnnotation(annotation)
             
-            self.chosenLatitude = String(coordinates.latitude)
-            self.chosenLongitude = String(coordinates.longitude)
+            PlaceModel.sharedInstance.placeLatitude = String(coordinates.latitude)
+            PlaceModel.sharedInstance.placeLongitude = String(coordinates.longitude)
         }
     }
 }
@@ -77,6 +76,28 @@ private extension MapVC{
 
     @objc func saveButtonClicked(){
         
+        let placeModel = PlaceModel.sharedInstance
+        let object = PFObject(className: "Places")
+        object["name"] = placeModel.placeName
+        object["type"] = placeModel.placeType
+        object["atmosphere"] = placeModel.placeAtmosphere
+        object["latitude"] = placeModel.placeLatitude
+        object["longitude"] = placeModel.placeLongitude
+        
+        if let imageData = placeModel.placeImage.jpegData(compressionQuality: 0.5) {
+            object["image"] = PFFileObject(name: "image.jpg", data: imageData)
+        }
+        
+        object.saveInBackground { success, error in
+            if error != nil{
+                let alert = UIAlertController(title: "Error!", message: error?.localizedDescription as? String ?? "Error", preferredStyle: UIAlertController.Style.alert)
+                let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel)
+                alert.addAction(okButton)
+                self.present(alert, animated: true)
+            } else{
+                self.performSegue(withIdentifier: "formMapVCtoPlacesVC", sender: nil)
+            }
+        }
     }
 
     @objc func backButtonClicked(){
